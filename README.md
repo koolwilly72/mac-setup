@@ -1,7 +1,7 @@
 # Mac Setup
 
 [![Ansible](https://img.shields.io/badge/Ansible-2.15+-green.svg)](https://www.ansible.com/)
-[![macOS](https://img.shields.io/badge/macOS-Ventura%20|%20Sonoma%20|%20Sequoia-blue.svg)](https://www.apple.com/macos/)
+[![macOS](https://img.shields.io/badge/macOS-Ventura%20|%20Sonoma%20|%20Sequoia%20|%20Tahoe-blue.svg)](https://www.apple.com/macos/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 Automated setup for macOS development environment using Ansible. This playbook configures a fresh any Mac with development tools, applications, and sensible defaults.
