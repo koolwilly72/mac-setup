@@ -1,0 +1,24 @@
+---
+- name: Update Homebrew
+  community.general.homebrew:
+    update_homebrew: true
+  changed_when: false
+
+- name: Upgrade all Homebrew packages
+  community.general.homebrew:
+    upgrade_all: true
+  when: homebrew_upgrade_all | default(false)
+
+- name: Install Homebrew packages
+  community.general.homebrew:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ homebrew_packages }}"
+  when: homebrew_packages | length > 0
+
+- name: Install Homebrew taps
+  community.general.homebrew_tap:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ homebrew_taps | default([]) }}"
+  when: homebrew_taps is defined and homebrew_taps | length > 0

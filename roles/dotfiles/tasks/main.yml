@@ -1,0 +1,60 @@
+---
+- name: Clone dotfiles repository
+  ansible.builtin.git:
+    repo: "{{ dotfiles_repo }}"
+    dest: "{{ dotfiles_destination }}"
+    accept_hostkey: true
+    version: "{{ dotfiles_version | default('HEAD') }}"
+  when: dotfiles_repo | length > 0
+
+- name: Check for dotfiles install script
+  ansible.builtin.stat:
+    path: "{{ dotfiles_destination }}/install.sh"
+  register: dotfiles_install_script
+  when: dotfiles_repo | length > 0
+
+- name: Run dotfiles install script
+  ansible.builtin.shell:
+    cmd: "bash {{ dotfiles_destination }}/install.sh"
+    chdir: "{{ dotfiles_destination }}"
+  when:
+    - dotfiles_repo | length > 0
+    - dotfiles_install_script.stat.exists | default(false)
+  changed_when: true
+
+- name: Create common dotfile symlinks
+  ansible.builtin.file:
+    src: "{{ dotfiles_destination }}/{{ item }}"
+    dest: "{{ user_home }}/{{ item }}"
+    state: link
+    force: true
+  loop:
+    - .zshrc
+    - .bashrc
+    - .vimrc
+    - .tmux.conf
+    - .gitignore_global
+  when:
+    - dotfiles_repo | length > 0
+    - dotfiles_symlink | bool
+  failed_when: false
+
+- name: Ensure .config directory exists
+  ansible.builtin.file:
+    path: "{{ user_home }}/.config"
+    state: directory
+    mode: '0755'
+
+- name: Create .config symlinks
+  ansible.builtin.file:
+    src: "{{ dotfiles_destination }}/.config/{{ item }}"
+    dest: "{{ user_home }}/.config/{{ item }}"
+    state: link
+    force: true
+  loop:
+    - nvim
+    - starship.toml
+  when:
+    - dotfiles_repo | length > 0
+    - dotfiles_symlink | bool
+  failed_when: false

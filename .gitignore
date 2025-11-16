@@ -1,0 +1,53 @@
+# Ansible
+*.retry
+*.pyc
+__pycache__/
+.ansible/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Sensitive data
+*.vault
+*.key
+*.pem
+.vault_pass
+secrets.yml
+vault.yml
+
+# Custom overrides (user-specific configs)
+group_vars/local.yml
+host_vars/*.yml
+!host_vars/.gitkeep
+
+# Temporary files
+*.tmp
+*.bak
+*.backup
+*.old
+
+# Python virtual environment
+venv/
+.venv/
+env/
+.env/

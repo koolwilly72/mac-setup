@@ -1,0 +1,47 @@
+---
+# .ansible-lint configuration
+
+profile: production
+
+exclude_paths:
+  - .git/
+  - .github/
+
+skip_list:
+  - name[template]
+  - yaml[line-length]
+  - command-instead-of-shell
+
+warn_list:
+  - experimental
+  - no-changed-when
+
+enable_list:
+  - empty-string-compare
+  - no-log-password
+  - no-same-owner
+
+use_default_rules: true
+
+parseable: true
+
+quiet: false
+
+verbosity: 1
+
+offline: false
+
+mock_modules: []
+
+mock_roles: []
+
+loop_var_prefix: "^(__|{role}_)"
+
+var_naming_pattern: "^[a-z_][a-z0-9_]*$"
+
+kinds:
+  - playbook: "site.yml"
+  - vars: "**/vars/*.yml"
+  - vars: "**/defaults/*.yml"
+  - tasks: "**/tasks/*.yml"
+  - handlers: "**/handlers/*.yml"

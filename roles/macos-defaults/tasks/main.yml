@@ -1,0 +1,133 @@
+---
+# Dock settings
+- name: Set Dock icon size
+  community.general.osx_defaults:
+    domain: com.apple.dock
+    key: tilesize
+    type: float
+    value: "{{ macos_dock_icon_size }}"
+  notify: Restart Dock
+
+- name: Enable Dock autohide
+  community.general.osx_defaults:
+    domain: com.apple.dock
+    key: autohide
+    type: bool
+    value: "{{ macos_dock_autohide }}"
+  notify: Restart Dock
+
+- name: Set Dock autohide delay
+  community.general.osx_defaults:
+    domain: com.apple.dock
+    key: autohide-delay
+    type: float
+    value: 0.0
+  when: macos_dock_autohide
+  notify: Restart Dock
+
+# Finder settings
+- name: Show hidden files in Finder
+  community.general.osx_defaults:
+    domain: com.apple.finder
+    key: AppleShowAllFiles
+    type: bool
+    value: "{{ macos_finder_show_hidden }}"
+  notify: Restart Finder
+
+- name: Show file extensions
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: AppleShowAllExtensions
+    type: bool
+    value: "{{ macos_finder_show_extensions }}"
+  notify: Restart Finder
+
+- name: Show path bar in Finder
+  community.general.osx_defaults:
+    domain: com.apple.finder
+    key: ShowPathbar
+    type: bool
+    value: true
+  notify: Restart Finder
+
+- name: Show status bar in Finder
+  community.general.osx_defaults:
+    domain: com.apple.finder
+    key: ShowStatusBar
+    type: bool
+    value: true
+  notify: Restart Finder
+
+- name: Set default Finder view to list
+  community.general.osx_defaults:
+    domain: com.apple.finder
+    key: FXPreferredViewStyle
+    type: string
+    value: "Nlsv"
+  notify: Restart Finder
+
+# Keyboard settings
+- name: Set key repeat rate
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: KeyRepeat
+    type: int
+    value: "{{ macos_key_repeat_rate }}"
+
+- name: Set initial key repeat delay
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: InitialKeyRepeat
+    type: int
+    value: "{{ macos_initial_key_repeat }}"
+
+- name: Disable press-and-hold for keys
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: ApplePressAndHoldEnabled
+    type: bool
+    value: false
+
+# Trackpad settings
+- name: Enable tap to click
+  community.general.osx_defaults:
+    domain: com.apple.AppleMultitouchTrackpad
+    key: Clicking
+    type: int
+    value: 1
+
+# Screenshots
+- name: Create Screenshots directory
+  ansible.builtin.file:
+    path: "{{ user_home }}/Screenshots"
+    state: directory
+    mode: '0755'
+
+- name: Set screenshot location
+  community.general.osx_defaults:
+    domain: com.apple.screencapture
+    key: location
+    type: string
+    value: "{{ user_home }}/Screenshots"
+
+- name: Set screenshot format to PNG
+  community.general.osx_defaults:
+    domain: com.apple.screencapture
+    key: type
+    type: string
+    value: "png"
+
+# Security settings
+- name: Require password immediately after sleep
+  community.general.osx_defaults:
+    domain: com.apple.screensaver
+    key: askForPassword
+    type: int
+    value: 1
+
+- name: Set password delay to 0
+  community.general.osx_defaults:
+    domain: com.apple.screensaver
+    key: askForPasswordDelay
+    type: int
+    value: 0

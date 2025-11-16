@@ -1,0 +1,83 @@
+---
+# Mac Mini Setup Configuration
+# Customize these variables to match your preferences
+
+# User configuration
+user_name: "{{ ansible_user_id }}"
+user_home: "{{ ansible_env.HOME }}"
+
+# Homebrew packages (CLI tools)
+homebrew_packages:
+  - git
+  - gh
+  - neovim
+  - tmux
+  - fzf
+  - ripgrep
+  - fd
+  - bat
+  - jq
+  - yq
+  - htop
+  - tree
+  - wget
+  - curl
+  - ansible
+  - ansible-lint
+
+# Homebrew casks (GUI applications)
+homebrew_casks:
+  - visual-studio-code
+  - iterm2
+  - docker
+  - rectangle
+  - alfred
+  - lastpass
+  - firefox
+  - google-chrome
+  - ledger-wallet
+  - obsidian
+
+# Development tools
+development_languages:
+  - python@3.12
+  - node
+  - go
+
+
+# Python packages to install globally
+python_packages:
+  - pipx
+  - black
+  - flake8
+  - mypy
+
+# Node.js global packages
+node_packages:
+  - yarn
+  - pnpm
+  - typescript
+  - ts-node
+
+# Git configuration
+git_user_name: "Your Name"
+git_user_email: "email@domain.com"
+git_default_branch: "main"
+
+# macOS preferences
+macos_dock_autohide: true
+macos_dock_icon_size: 48
+macos_finder_show_hidden: true
+macos_finder_show_extensions: true
+macos_key_repeat_rate: 2
+macos_initial_key_repeat: 15
+
+# Dotfiles repository (optional)
+dotfiles_repo: ""
+dotfiles_destination: "{{ user_home }}/.dotfiles"
+dotfiles_symlink: true
+
+# SSH key generation
+ssh_key_generate: true
+ssh_key_type: "ed25519"
+ssh_key_comment: "{{ git_user_email }}"

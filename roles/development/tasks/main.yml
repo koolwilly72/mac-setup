@@ -1,0 +1,88 @@
+---
+- name: Install development languages
+  community.general.homebrew:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ development_languages }}"
+  when: development_languages | length > 0
+
+- name: Configure Git user name
+  community.general.git_config:
+    name: user.name
+    value: "{{ git_user_name }}"
+    scope: global
+  when: git_user_name | length > 0
+
+- name: Configure Git user email
+  community.general.git_config:
+    name: user.email
+    value: "{{ git_user_email }}"
+    scope: global
+  when: git_user_email | length > 0
+
+- name: Configure Git default branch
+  community.general.git_config:
+    name: init.defaultBranch
+    value: "{{ git_default_branch }}"
+    scope: global
+
+- name: Configure Git pull rebase
+  community.general.git_config:
+    name: pull.rebase
+    value: "false"
+    scope: global
+
+- name: Install pipx via Homebrew
+  community.general.homebrew:
+    name: pipx
+    state: present
+  when: python_packages | length > 0
+
+- name: Ensure pipx path is configured
+  ansible.builtin.command:
+    cmd: /opt/homebrew/bin/pipx ensurepath
+  changed_when: false
+  when: python_packages | length > 0
+
+- name: Install Python packages via pipx
+  ansible.builtin.command:
+    cmd: "/opt/homebrew/bin/pipx install {{ item }}"
+    creates: "{{ user_home }}/.local/bin/{{ item }}"
+  loop: "{{ python_packages }}"
+  when: python_packages | length > 0
+
+- name: Install Node.js global packages
+  community.general.npm:
+    name: "{{ item }}"
+    global: true
+    state: present
+  loop: "{{ node_packages }}"
+  when: node_packages | length > 0
+
+- name: Ensure .ssh directory exists
+  ansible.builtin.file:
+    path: "{{ user_home }}/.ssh"
+    state: directory
+    mode: '0700'
+  when: ssh_key_generate | bool
+
+- name: Generate SSH key
+  community.crypto.openssh_keypair:
+    path: "{{ user_home }}/.ssh/id_{{ ssh_key_type }}"
+    type: "{{ ssh_key_type }}"
+    comment: "{{ ssh_key_comment }}"
+  when: ssh_key_generate | bool
+
+- name: Display SSH public key
+  ansible.builtin.command:
+    cmd: "cat {{ user_home }}/.ssh/id_{{ ssh_key_type }}.pub"
+  register: development_ssh_public_key
+  when: ssh_key_generate | bool
+  changed_when: false
+
+- name: Show SSH key for GitHub
+  ansible.builtin.debug:
+    msg: |
+      Your SSH public key (add to GitHub):
+      {{ development_ssh_public_key.stdout }}
+  when: ssh_key_generate | bool and development_ssh_public_key is defined
