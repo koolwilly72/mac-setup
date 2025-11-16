@@ -16,6 +16,7 @@ homebrew_packages:
   - ripgrep
   - fd
   - bat
+  - eza
   - jq
   - yq
   - htop
@@ -24,6 +25,8 @@ homebrew_packages:
   - curl
   - ansible
   - ansible-lint
+  - mas
+  - hashicorp/tap/terraform
 
 # Homebrew casks (GUI applications)
 homebrew_casks:
@@ -37,6 +40,22 @@ homebrew_casks:
   - google-chrome
   - ledger-wallet
   - obsidian
+  - discord
+  - ccleaner
+  - sublime-text
+  - syncthing
+
+  
+homebrew_taps:
+  - hashicorp/tap
+
+mas_apps:
+  - id: 1451685025
+    name: "WireGuard"
+  - id: 1295203466
+    name: "Windows App"
+  - id: 472226235
+    name: "LanScan"
 
 # Development tools
 development_languages:
@@ -60,8 +79,8 @@ node_packages:
   - ts-node
 
 # Git configuration
-git_user_name: "Your Name"
-git_user_email: "email@domain.com"
+git_user_name: "Wilson"
+git_user_email: "wilson@fragmentsolutions.com"
 git_default_branch: "main"
 
 # macOS preferences
