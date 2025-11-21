@@ -20,16 +20,16 @@
     msg: "Note: Some casks may require manual installation or already exist"
   when: apps_cask_result is defined and apps_cask_result.results | selectattr('failed', 'defined') | selectattr('failed') | list | length > 0
 
-- name: Install Mac App Store apps via mas
-  community.general.homebrew:
-    name: mas
-    state: present
-  when: mas_apps is defined and mas_apps | length > 0
+# - name: Install Mac App Store apps via mas
+#   community.general.homebrew:
+#     name: mas
+#     state: present
+#   when: mas_apps is defined and mas_apps | length > 0
 
-- name: Install Mac App Store apps
-  ansible.builtin.command:
-    cmd: "mas install {{ item.id }}"
-  loop: "{{ mas_apps | default([]) }}"
-  when: mas_apps is defined and mas_apps | length > 0
-  changed_when: false
-  failed_when: false
+# - name: Install Mac App Store apps
+#   ansible.builtin.command:
+#     cmd: "mas install {{ item.id }}"
+#   loop: "{{ mas_apps | default([]) }}"
+#   when: mas_apps is defined and mas_apps | length > 0
+#   changed_when: false
+#   failed_when: false

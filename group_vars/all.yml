@@ -44,18 +44,22 @@ homebrew_casks:
   - ccleaner
   - sublime-text
   - syncthing
-
+  - vagrant
+  - vmware-fusion
+  - vagrant-vmware-utility
   
 homebrew_taps:
   - hashicorp/tap
 
-mas_apps:
-  - id: 1451685025
-    name: "WireGuard"
-  - id: 1295203466
-    name: "Windows App"
-  - id: 472226235
-    name: "LanScan"
+# mas_apps:
+#   - id: 1451685025
+#     name: "WireGuard"
+#   - id: 1295203466
+#     name: "Windows App"
+#   - id: 472226235
+#     name: "LanScan"
+#   - id: 409201541
+#     name: "Pages"
 
 # Development tools
 development_languages:

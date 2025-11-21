@@ -51,6 +51,12 @@
   loop: "{{ python_packages }}"
   when: python_packages | length > 0
 
+- name: Install Vagrant VMware plugin
+  ansible.builtin.command:
+    cmd: vagrant plugin install vagrant-vmware-desktop
+  args:
+    creates: "{{ user_home }}/.vagrant.d/gems/*/gems/vagrant-vmware-desktop-*"
+
 - name: Install Node.js global packages
   community.general.npm:
     name: "{{ item }}"
